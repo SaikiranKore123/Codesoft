@@ -23,7 +23,7 @@ This repository contains the code and explanations for three Java development in
   4.Assign grades based on the average percentage achieved.
   5/.Display the total marks, average percentage, and the corresponding grade to the user.
 
-## TASK #: ATM INTERFACE
+## TASK 3: ATM INTERFACE
 
 - **Description:** Build an ATM interface with options for checking balance, depositing, and withdrawing funds.
 - **Instructions:**
