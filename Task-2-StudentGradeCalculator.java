@@ -1,51 +1,100 @@
 import java.util.Scanner;
-public class StudentGradeCalculator {
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        // Asking user for the number of subjects
-        System.out.print("Enter the number of subjects: ");
-        int numSubjects = scanner.nextInt();
-        int totalMarks = 0;
-        // User inputs marks for each subject and validate input
-        for (int i = 1; i <= numSubjects; i++) {
-            int subjectMarks;
-            do {
-                System.out.print("Enter marks for Subject " + i + ": ");
-                if (scanner.hasNextInt()) {
-                    subjectMarks = scanner.nextInt();
-                    if (subjectMarks >= 0 && subjectMarks <= 100) {
-                        break; // Valid input, exit the loop
-                    } else {
-                        System.out.println("Marks must be between 0 and 100.");
-                    }
-                } else {
-                    System.out.println("Please enter a valid integer.");
-                    scanner.next(); // Clear invalid input from the scanner
-                }
-            } while (true);
-            totalMarks += subjectMarks;
-        }
-        // Calculating the average percentage
-        double averagePercentage = (double) totalMarks / numSubjects;
-        String grade;
-        // Assigning grades based on the average percentage obtained
-        if (averagePercentage >= 90) {
-            grade = "A+";
-        } else if (averagePercentage >= 80) {
-            grade = "A";
-        } else if (averagePercentage >= 70) {
-            grade = "B";
-        } else if (averagePercentage >= 60) {
-            grade = "C";
-        } else if (averagePercentage >= 50) {
-            grade = "D";
-        } else {
-            grade = "F";
-        }
-        // Displaying the  Student results to the user
-        System.out.println("Total Marks: " + totalMarks);
-        System.out.println("Average Percentage: " + averagePercentage + "%");
-        System.out.println("Grade: " + grade);
-        scanner.close();
+public class ATMInterface {
+    private double accountBalance;
+    public ATMInterface(double initialBalance) {
+        this.accountBalance = initialBalance;
     }
-}
+    public double checkBalance() {
+        return accountBalance;
+    }
+    public boolean deposit(double amount) {
+        if (amount > 0) {
+            accountBalance += amount;
+            return true; // Deposit successful
+        }
+        return false; // Invalid deposit amount
+    }
+    public boolean withdraw(double amount) {
+        if (amount > 0 && amount <= accountBalance) {
+            accountBalance -= amount;
+            return true; // Withdrawal successful
+        }
+        return false; // Invalid withdrawal amount or insufficient balance
+    }
+    public static void main(String[] args) {
+        ATMInterface atm = new ATMInterface(10000.0); // Initialize ATM with an initial balance
+        Scanner scanner = new Scanner(System.in);
+        while (true) {
+            System.out.println("ATM Menu:");
+            System.out.println("1. Check Balance");
+            System.out.println("2. Deposit");
+            System.out.println("3. Withdraw");
+            System.out.println("4. Exit");
+            System.out.print("Enter your choice: ");
+            int choice;
+            double amount;
+            // Input validation loop
+            while (true) {
+                if (scanner.hasNextInt()) {
+                    choice = scanner.nextInt();
+                    break;
+                } else {
+                    System.out.println("Invalid input. Please enter a number.");
+                    scanner.next(); // Clear invalid input
+                }
+            }
+            switch (choice) {
+                case 1:
+                    System.out.println("Current Balance: $" + atm.checkBalance());
+                    break;
+                case 2:
+                    System.out.print("Enter deposit amount: $");
+                    // Input validation loop for deposit amount
+                    while (true) {
+                        if (scanner.hasNextDouble()) 
+                        {
+                            amount = scanner.nextDouble();
+                            break;
+                        } 
+                        else
+                         {
+                            System.out.println("Invalid input. Please enter a valid amount.");
+                            scanner.next(); // Clear invalid input
+                        }
+                    }
+                    if (atm.deposit(amount)) 
+                    {
+                        System.out.println("Deposit successful.");
+                    } else
+                    {
+                        System.out.println("Invalid deposit amount. Please enter a positive amount.");
+                    }
+                    break;
+                case 3:
+                    System.out.print("Enter withdrawal amount: $");
+                    // Input validation loop for withdrawal amount
+                    while (true) {
+                        if (scanner.hasNextDouble()) {
+                            amount = scanner.nextDouble();
+                            break;
+                        } else {
+                            System.out.println("Invalid input. Please enter a valid amount.");
+                            scanner.next(); // Clear invalid input
+                        }
+                    }
+                    if (atm.withdraw(amount)) {
+                        System.out.println("Withdrawal successful.");
+                    } else
+                    {
+                        System.out.println("Invalid withdrawal amount or insufficient balance.");
+                    }
+                    break;
+                case 4:
+                    System.out.println("Thank you for using the ATM.");
+                    scanner.close();
+                    System.exit(0);
+                default:
+                    System.out.println("Invalid choice. Please try again.");
+            }
+        }
+    }
