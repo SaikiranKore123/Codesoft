@@ -43,7 +43,8 @@ public class ATMInterface {
                     scanner.next(); // Clear invalid input
                 }
             }
-            switch (choice) {
+            switch (choice) 
+            {
                 case 1:
                     System.out.println("Current Balance: $" + atm.checkBalance());
                     break;
@@ -84,7 +85,6 @@ public class ATMInterface {
                             scanner.next(); // Clear invalid input
                         }
                     }
-
                     if (atm.withdraw(amount)) {
                         System.out.println("Withdrawal successful.");
                     } else
